@@ -2,6 +2,7 @@ package utils
 
 // Version Info
 var (
+	Version   string
 	Hash      string
 	Date      string
 	GoVersion string
