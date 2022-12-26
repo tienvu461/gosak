@@ -56,9 +56,9 @@ func Execute(c *Config) error {
       Transport: &http.Transport{
          TLSClientConfig: tlsConfig,
       },
-      // CheckRedirect: func(req *http.Request, via []*http.Request) error {
-      //    return http.ErrUseLastResponse
-      // },
+      CheckRedirect: func(req *http.Request, via []*http.Request) error {
+         return http.ErrUseLastResponse
+      },
    }
 
    requestBuilder := &wrappedBuilder{
