@@ -20,6 +20,7 @@ type Config struct {
    Url                *url.URL
    ControlOutput      io.Writer
    ResponseBodyOutput io.Writer
+   IncludeDetails bool
 }
 
 func Execute(c *Config) error {
@@ -63,10 +64,12 @@ func Execute(c *Config) error {
    requestBuilder := &wrappedBuilder{
       prefix: ">",
    }
-
-   requestBuilder.Printf("%v %v", request.Method, request.URL.String())
-   requestBuilder.WriteHeaders(request.Header)
-   requestBuilder.Println()
+   
+   if c.IncludeDetails {
+       requestBuilder.Printf("%v %v", request.Method, request.URL.String())
+       requestBuilder.WriteHeaders(request.Header)
+       requestBuilder.Println()
+   }
 
    if _, err := io.Copy(c.ControlOutput, strings.NewReader(requestBuilder.String())); err != nil {
       return err
@@ -87,10 +90,12 @@ func Execute(c *Config) error {
       prefix: "<",
    }
 
-   responseBuilder.Printf("%v %v", response.Proto, response.Status)
-   responseBuilder.WriteHeaders(response.Header)
-   responseBuilder.Printf("")
-   responseBuilder.Println()
+   if c.IncludeDetails {
+       responseBuilder.Printf("%v %v", response.Proto, response.Status)
+       responseBuilder.WriteHeaders(response.Header)
+       responseBuilder.Printf("")
+       responseBuilder.Println()
+   }
 
    if _, err := io.Copy(c.ControlOutput, strings.NewReader(responseBuilder.String())); err != nil {
       return err

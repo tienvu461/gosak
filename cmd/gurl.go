@@ -5,7 +5,6 @@ Copyright © 2022 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"fmt"
     "os"
     "net/http"
 	"net/url"
@@ -27,7 +26,6 @@ func CreateCommand(c *gurl.Config, headers []string) *cobra.Command {
         Args:    ArgsValidator(c),
         PreRunE: OptionsValidator(c, headers),
         RunE: func(cmd *cobra.Command, args []string) error {
-            fmt.Println("gurl called")
             return gurl.Execute(c)
         },
     }
@@ -40,6 +38,7 @@ func init() {
           Headers:            map[string][]string{},
           ResponseBodyOutput: os.Stdout,
           ControlOutput:      os.Stdout,
+          IncludeDetails:     true,
     }
     gurlCmd := CreateCommand(config, headers)
     rootCmd.AddCommand(gurlCmd)
