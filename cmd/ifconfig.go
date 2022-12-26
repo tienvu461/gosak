@@ -1,36 +1,35 @@
 /*
 Copyright © 2022 NAME HERE <EMAIL ADDRESS>
-
 */
 package cmd
 
 import (
-    "os"
 	"net/url"
+	"os"
 
 	"github.com/spf13/cobra"
-    "github.com/tienvu461/gosak/gurl"
-    "github.com/tienvu461/gosak/utils"
+	"github.com/tienvu461/gosak/gurl"
+	"github.com/tienvu461/gosak/utils"
 )
 
 // ifconfigCmd represents the ifconfig command
 var ifconfigCmd = &cobra.Command{
 	Use:   "ifconfig",
 	Short: "Get current Public IP",
-    Long: `Utilize gurl cmd to make a HTTP Get Request to https://ifconfig.me and return a Public IP`,
+	Long:  `Utilize gurl cmd to make a HTTP Get Request to https://ifconfig.me and return a Public IP`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-        u, err := url.Parse(utils.IFCONFIG_URL)
+		u, err := url.Parse(utils.IFCONFIG_URL)
 		if err != nil {
 			return nil
 		}
-        config := &gurl.Config {
-              Headers:            map[string][]string{},
-              UserAgent:          "curl",
-              ResponseBodyOutput: os.Stdout,
-              ControlOutput:      os.Stdout,
-              Url:                u,
-        }
-        return gurl.Execute(config)
+		config := &gurl.Config{
+			Headers:            map[string][]string{},
+			UserAgent:          "curl",
+			ResponseBodyOutput: os.Stdout,
+			ControlOutput:      os.Stdout,
+			Url:                u,
+		}
+		return gurl.Execute(config)
 	},
 }
 

@@ -1,47 +1,46 @@
 /*
 Copyright © 2022 NAME HERE <EMAIL ADDRESS>
-
 */
 package cmd
 
 import (
-    "os"
-    "net/http"
+	"net/http"
 	"net/url"
+	"os"
 	"strings"
 
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
-    "github.com/tienvu461/gosak/gurl"
-    "github.com/tienvu461/gosak/utils"
+	"github.com/tienvu461/gosak/gurl"
+	"github.com/tienvu461/gosak/utils"
 )
 
 func CreateCommand(c *gurl.Config, headers []string) *cobra.Command {
-    command := &cobra.Command{
-        Use:   "gurl <URL>",
-        Short: "Cheap knockoff of famous curl",
-        Long: `gURL is the first command client which similar to cURL HTTP Client that I built following this tutorial https://dev.to/mauriciolinhares/building-and-distributing-a-command-line-tool-in-golang-go0
+	command := &cobra.Command{
+		Use:   "gurl <URL>",
+		Short: "Cheap knockoff of famous curl",
+		Long: `gURL is the first command client which similar to cURL HTTP Client that I built following this tutorial https://dev.to/mauriciolinhares/building-and-distributing-a-command-line-tool-in-golang-go0
             Usage:
         `,
-        Args:    ArgsValidator(c),
-        PreRunE: OptionsValidator(c, headers),
-        RunE: func(cmd *cobra.Command, args []string) error {
-            return gurl.Execute(c)
-        },
-    }
+		Args:    ArgsValidator(c),
+		PreRunE: OptionsValidator(c, headers),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return gurl.Execute(c)
+		},
+	}
 
-   return command
+	return command
 }
 func init() {
-    headers := make([]string, 0, 255)
-    config := &gurl.Config {
-          Headers:            map[string][]string{},
-          ResponseBodyOutput: os.Stdout,
-          ControlOutput:      os.Stdout,
-          IncludeDetails:     true,
-    }
-    gurlCmd := CreateCommand(config, headers)
-    rootCmd.AddCommand(gurlCmd)
+	headers := make([]string, 0, 255)
+	config := &gurl.Config{
+		Headers:            map[string][]string{},
+		ResponseBodyOutput: os.Stdout,
+		ControlOutput:      os.Stdout,
+		IncludeDetails:     true,
+	}
+	gurlCmd := CreateCommand(config, headers)
+	rootCmd.AddCommand(gurlCmd)
 
 	// Here you will define your flags and configuration settings.
 
@@ -49,11 +48,11 @@ func init() {
 	// and all subcommands, e.g.:
 	// gurlCmd.PersistentFlags().String("foo", "", "A help for foo")
 
-    gurlCmd.PersistentFlags().StringSliceVarP(&headers, "headers", "H", nil, `custom headers headers to be sent with the request, headers are separated by "," as in "HeaderName: Header content,OtherHeader: Some other value"`)
-    gurlCmd.PersistentFlags().StringVarP(&config.UserAgent, "user-agent", "u", "gurl", "the user agent to be used for requests")
-    gurlCmd.PersistentFlags().StringVarP(&config.Data, "data", "d", "", "data to be sent as the request body")
-    gurlCmd.PersistentFlags().StringVarP(&config.Method, "method", "m", http.MethodGet, "HTTP method to be used for the request")
-    gurlCmd.PersistentFlags().BoolVarP(&config.Insecure, "insecure", "k", false, "allows insecure server connections over HTTPS")
+	gurlCmd.PersistentFlags().StringSliceVarP(&headers, "headers", "H", nil, `custom headers headers to be sent with the request, headers are separated by "," as in "HeaderName: Header content,OtherHeader: Some other value"`)
+	gurlCmd.PersistentFlags().StringVarP(&config.UserAgent, "user-agent", "u", "gurl", "the user agent to be used for requests")
+	gurlCmd.PersistentFlags().StringVarP(&config.Data, "data", "d", "", "data to be sent as the request body")
+	gurlCmd.PersistentFlags().StringVarP(&config.Method, "method", "m", http.MethodGet, "HTTP method to be used for the request")
+	gurlCmd.PersistentFlags().BoolVarP(&config.Insecure, "insecure", "k", false, "allows insecure server connections over HTTPS")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:

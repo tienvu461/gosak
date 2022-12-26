@@ -15,9 +15,9 @@ import (
 
 // sslcertCmd represents the sslcert command
 var sslcertCmd = &cobra.Command{
-    Use:   "sslcert <domain>:443",
+	Use:   "sslcert <domain>:443",
 	Short: "Get SSL certificate status, expire date, TLS version, ...",
-	Long: `Get SSL certificate status, expire date, TLS version, ...`,
+	Long:  `Get SSL certificate status, expire date, TLS version, ...`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if l := len(args); l != 1 {
 			return utils.NewErrorWithCode(2, "you must provide a single URL to be called but you provided %v", l)
@@ -27,25 +27,25 @@ var sslcertCmd = &cobra.Command{
 		if err != nil {
 			return errors.Wrapf(err, "the URL provided is invalid: %v", args[0])
 		}
-        conf := &tls.Config{
-            InsecureSkipVerify: true,
-        }
-        //TODO: automatically parsing domain name from any input type and
-        //appending port 443 afterward
-        conn, err := tls.Dial("tcp", u.String(), conf)
-        if err != nil {
-            fmt.Println("Error in Dial", err)
-            return err
-        }
-        defer conn.Close()
-        certs := conn.ConnectionState().PeerCertificates
-        for _, cert := range certs {
-            fmt.Printf("Issuer Name: %s\n", cert.Issuer)
-            fmt.Printf("Expiry: %s \n", cert.NotAfter.Format("2006-January-02"))
-            fmt.Printf("Common Name: %s \n", cert.Issuer.CommonName)
+		conf := &tls.Config{
+			InsecureSkipVerify: true,
+		}
+		//TODO: automatically parsing domain name from any input type and
+		//appending port 443 afterward
+		conn, err := tls.Dial("tcp", u.String(), conf)
+		if err != nil {
+			fmt.Println("Error in Dial", err)
+			return err
+		}
+		defer conn.Close()
+		certs := conn.ConnectionState().PeerCertificates
+		for _, cert := range certs {
+			fmt.Printf("Issuer Name: %s\n", cert.Issuer)
+			fmt.Printf("Expiry: %s \n", cert.NotAfter.Format("2006-January-02"))
+			fmt.Printf("Common Name: %s \n", cert.Issuer.CommonName)
 
-    }
-        return nil
+		}
+		return nil
 	},
 }
 

@@ -23,32 +23,32 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("get called")
-        var endPoint ="https://ifconfig.me"
+		var endPoint = "https://ifconfig.me"
 
-        if len(args) >= 1 && args[0] != "" {
-            endPoint = args[0]
-        }
+		if len(args) >= 1 && args[0] != "" {
+			endPoint = args[0]
+		}
 
-        fmt.Println("Trying to get public IP Address")
+		fmt.Println("Trying to get public IP Address")
 
-        response, err := http.Get(endPoint)
+		response, err := http.Get(endPoint)
 
-        if err != nil {
-            fmt.Println(err)
-            fmt.Println("Cannot get public IP Address")
-        }
+		if err != nil {
+			fmt.Println(err)
+			fmt.Println("Cannot get public IP Address")
+		}
 
-        defer response.Body.Close()
+		defer response.Body.Close()
 
-        if response.StatusCode == 200 {
-            body, err := io.ReadAll(response.Body)
-            if err != nil {
-                fmt.Println(err)
-            }
-            fmt.Println(string(body))
-        } else {
-            fmt.Println("Fail to reach" + endPoint)
-        }
+		if response.StatusCode == 200 {
+			body, err := io.ReadAll(response.Body)
+			if err != nil {
+				fmt.Println(err)
+			}
+			fmt.Println(string(body))
+		} else {
+			fmt.Println("Fail to reach" + endPoint)
+		}
 	},
 }
 
