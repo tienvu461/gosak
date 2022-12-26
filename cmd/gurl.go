@@ -17,19 +17,6 @@ import (
     "github.com/tienvu461/gosak/utils"
 )
 
-// gurlCmd represents the gurl command
-// var gurlCmd = &cobra.Command{
-// 	Use:   "gurl <URL>",
-// 	Short: "Cheap knockoff of famous curl",
-// 	Long: `gURL is the first command client which similar to cURL HTTP Client that I built following this tutorial https://dev.to/mauriciolinhares/building-and-distributing-a-command-line-tool-in-golang-go0
-//     Usage:
-// `,
-// 	RunE: func(cmd *cobra.Command, args []string) error {
-// 		fmt.Println("gurl called")
-//         return gurl.Execute(config)
-// 	},
-// }
-
 func CreateCommand(c *gurl.Config, headers []string) *cobra.Command {
     command := &cobra.Command{
         Use:   "gurl <URL>",
