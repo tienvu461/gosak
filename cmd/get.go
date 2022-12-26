@@ -45,7 +45,7 @@ to quickly create a Cobra application.`,
             if err != nil {
                 fmt.Println(err)
             }
-            fmt.Println(body)
+            fmt.Println(string(body))
         } else {
             fmt.Println("Fail to reach" + endPoint)
         }
