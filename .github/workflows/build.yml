@@ -36,12 +36,41 @@ jobs:
       - name: CI - format
         run: |
           make -f common.mk fmt
+          if [ $? != 0 ]; then
+            echo "FAIL"
+            exit
+          fi
       - name: CI - test
         run: |
           echo "TODO: test"
 
+      - name: version
+        run: echo "::set-output name=version::$(date +"%Y%m%d-%H%M%S")"
+        id: version
+
       - name: CD - build binary
         run: |
           echo "$(date)"
-          make -f build.mk clean
-          make -f build.mk build
+          ENV=prod make -f build.mk clean
+          ENV=prod make -f build.mk build
+
+      - name: Release
+        uses: actions/create-release@v1
+        id: create_release
+        with:
+          draft: false
+          prerelease: false
+          release_name: ${{ steps.version.outputs.version }}
+          tag_name: ${{ github.ref }}
+          body_path: CHANGELOG.md
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: upload artifacts
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./gosak.prod.linux.amd64
+          asset_name: gosak.prod.linux.amd64
+          # asset_content_type: application/gzip
