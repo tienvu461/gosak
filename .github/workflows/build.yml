@@ -51,8 +51,8 @@ jobs:
       - name: CD - build binary
         run: |
           echo "$(date)"
-          ENV=prod make -f build.mk clean
-          ENV=prod make -f build.mk build
+          make -f build.mk clean ENV=prod
+          make -f build.mk build ENV=prod
 
       - name: Release
         uses: actions/create-release@v1
