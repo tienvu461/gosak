@@ -2,10 +2,8 @@ name: Build binary
 on:
   workflow_dispatch:
   push:
-    paths:
-      - '*.go'
-    branchs:
-      - 'main'
+    branches:
+      - main
 
 jobs:
   build-binary:
