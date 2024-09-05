@@ -51,14 +51,6 @@ func B64CreateCommand(c *B64Config) *cobra.Command {
 			} else {
 				return B64Decode(c.Text)
 			}
-			d_data, err := base64.StdEncoding.DecodeString(c.Text)
-
-			fmt.Printf("%q\n", d_data)
-			if err != nil {
-				fmt.Println("error:", err)
-				return err
-			}
-			return err
 		},
 	}
 
