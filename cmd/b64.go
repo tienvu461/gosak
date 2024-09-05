@@ -40,12 +40,9 @@ func B64CreateCommand(c *B64Config) *cobra.Command {
 	command := &cobra.Command{
 		Use:   "b64",
 		Short: "Base64 encode, decode",
-		Long:  `Base64 encode, decode`,
+		Long:  `Take text or b64 encoded input and do encode/decode`,
 		Args:  B64ArgsValidator(c),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			// fmt.Println(c.Text)
-			// str := base64.StdEncoding.EncodeToString([]byte("Hello, playground"))
-			// fmt.Println(str)
 			if c.Encode {
 				return B64Encode(c.Text)
 			} else {
@@ -60,23 +57,12 @@ func B64CreateCommand(c *B64Config) *cobra.Command {
 func init() {
 	config := &B64Config{
 		Encode: false,
-		Text:   "abc",
+		Text:   "",
 	}
 	b64Cmd := B64CreateCommand(config)
 	rootCmd.AddCommand(b64Cmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// b64Cmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// b64Cmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-
+	// Flgas
 	b64Cmd.Flags().BoolVarP(&config.Encode, "encode", "e", false, "Encode base64")
-	// b64Cmd.Flags().StringVarP(&config.Text, "text", "t", "", "Text")
 }
 
 func B64ArgsValidator(c *B64Config) func(cmd *cobra.Command, args []string) error {
