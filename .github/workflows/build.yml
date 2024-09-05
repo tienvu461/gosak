@@ -51,8 +51,18 @@ jobs:
       - name: CD - build binary
         run: |
           echo "$(date)"
-          make -f build.mk clean ENV=prod
-          make -f build.mk build ENV=prod
+          echo "Build linux x86"
+          make -f build.mk clean ENV=prod GOOS=linux GOARCH=amd64
+          make -f build.mk build ENV=prod GOOS=linux GOARCH=amd64
+          echo "Build linux arm"
+          make -f build.mk clean ENV=prod GOOS=linux GOARCH=arm64
+          make -f build.mk build ENV=prod GOOS=linux GOARCH=arm64
+          echo "Build darwin x86"
+          make -f build.mk clean ENV=prod GOOS=darwin GOARCH=amd64
+          make -f build.mk build ENV=prod GOOS=darwin GOARCH=amd64
+          echo "Build darwin arm"
+          make -f build.mk clean ENV=prod GOOS=darwin GOARCH=arm64
+          make -f build.mk build ENV=prod GOOS=darwin GOARCH=arm64
 
       - name: Release
         uses: actions/create-release@v1
@@ -65,7 +75,7 @@ jobs:
           body_path: CHANGELOG.md
         env:
           GITHUB_TOKEN: ${{ github.token }}
-      - name: upload artifacts
+      - name: upload artifacts linux x86
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -73,4 +83,31 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./gosak.prod.linux.amd64
           asset_name: gosak.prod.linux.amd64
+          asset_content_type: application/octet-stream
+      - name: upload artifacts linux arm
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./gosak.prod.linux.arm64
+          asset_name: gosak.prod.linux.arm64
+          asset_content_type: application/octet-stream
+      - name: upload artifacts darwin x86
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./gosak.prod.darwin.amd64
+          asset_name: gosak.prod.darwin.amd64
+          asset_content_type: application/octet-stream
+      - name: upload artifacts darwin arm
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./gosak.prod.darwin.arm64
+          asset_name: gosak.prod.darwin.arm64
           asset_content_type: application/octet-stream
