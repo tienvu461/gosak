@@ -40,7 +40,7 @@ jobs:
             echo "FAIL"
             exit
           fi
-      - name: CI - test
+      - name: CI - unit test
         run: |
           echo "TODO: test"
 
