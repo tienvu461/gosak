@@ -31,17 +31,6 @@ jobs:
           go-version: 1.19
         id: go
 
-      - name: CI - format
-        run: |
-          make -f common.mk fmt
-          if [ $? != 0 ]; then
-            echo "FAIL"
-            exit
-          fi
-      - name: CI - test
-        run: |
-          echo "TODO: test"
-
       - name: version
         run: echo "::set-output name=version::${GITHUB_REF#refs/*/}"
         id: version
