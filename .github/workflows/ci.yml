@@ -1,0 +1,46 @@
+name: Run CI
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    types: 
+      - ready_for_review
+      - review_requested
+
+jobs:
+  run-ci:
+    runs-on: ubuntu-latest
+
+    permissions:
+      repository-projects: write
+      contents: write
+      id-token: write
+      issues: write
+      pull-requests: write
+
+    env:
+      APP_NAME: gosak
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 400
+
+      - name: Set up Go 1.19
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.19
+        id: go
+
+      - name: CI - format
+        run: |
+          make -f common.mk fmt
+          if [ $? != 0 ]; then
+            echo "FAIL"
+            exit
+          fi
+      - name: CI - test
+        run: |
+          echo "TODO: test"
+
