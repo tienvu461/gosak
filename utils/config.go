@@ -5,6 +5,8 @@ var (
 	Version   string
 	Hash      string
 	Date      string
+	Arch      string
+	Os        string
 	GoVersion string
 )
 
