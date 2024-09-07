@@ -1,6 +1,7 @@
 # gosak
 
 A swiss army knife written in go
+
 ![sak](./sak.webp)
 
 # Features
@@ -27,18 +28,16 @@ chmod +x gosak
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$PATH
 ```
-## install deps
+## install deps & cobra-cli
+```
 go get
-## install cobra-cli
 go install github.com/spf13/cobra-cli@latest
-
+```
 ## How to add new tool
-
 - cd to project root
 - Run the following command:
-
 ```
-cobra-cli add new-tool-to-gosak
+cobra-cli add <new-tool-to-gosak>
 ```
 
 ## Build
@@ -46,7 +45,7 @@ make -f build.mk clean
 make -f build.mk build
 
 ## Release
-1. Merge code to main: [PR #13](https://github.com/tienvu461/gosak/pull/13) & verify CI
+1. Merge code to main: example [PR #13](https://github.com/tienvu461/gosak/pull/13) & verify CI
 2. Checkout latest main & tag with sematic version (vx.y.z):
 ```
 git checkout main
