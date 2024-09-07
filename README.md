@@ -28,3 +28,7 @@ cobra-cli add new-tool-to-gosak
 # Build
 make -f build.mk clean
 make -f build.mk build
+
+# Todo
+- Unit test
+- Compatability test with Windows/Linux/MacOS
