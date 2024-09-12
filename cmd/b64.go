@@ -6,6 +6,7 @@ package cmd
 import (
 	"encoding/base64"
 	"fmt"
+	"strings"
 
 	"github.com/spf13/cobra"
 	"github.com/tienvu461/gosak/utils"
@@ -16,25 +17,26 @@ type B64Config struct {
 	Text   string
 }
 
-func B64Decode(t string) error {
+func B64Decode(t string) (string, error) {
 	fmt.Println("Decoding:", t)
 	d_text, err := base64.StdEncoding.DecodeString(t)
+	d_str := strings.ReplaceAll(string(d_text[:]), "\n", "")
 
 	if err != nil {
 		fmt.Println("Error:", err)
 		fmt.Println("Unable to decode", t)
 		// return utils.Code(1)
-		return err
+		return "", err
 	}
-	fmt.Printf("%q\n", d_text)
-	return err
+	fmt.Printf("%q\n", d_str)
+	return d_str, nil
 }
-func B64Encode(t string) error {
+func B64Encode(t string) (string, error) {
 	fmt.Println("Encoding:", t)
 	e_text := base64.StdEncoding.EncodeToString([]byte(t))
 
 	fmt.Println(e_text)
-	return nil
+	return e_text, nil
 }
 func B64CreateCommand(c *B64Config) *cobra.Command {
 	command := &cobra.Command{
@@ -43,11 +45,18 @@ func B64CreateCommand(c *B64Config) *cobra.Command {
 		Long:  `Take text or b64 encoded input and do encode/decode`,
 		Args:  B64ArgsValidator(c),
 		RunE: func(cmd *cobra.Command, args []string) error {
+			var err error
+			var res string
 			if c.Encode {
-				return B64Encode(c.Text)
+				res, err = B64Encode(c.Text)
 			} else {
-				return B64Decode(c.Text)
+				res, err = B64Decode(c.Text)
 			}
+			if err != nil {
+				return err
+			}
+			fmt.Println(res)
+			return nil
 		},
 	}
 

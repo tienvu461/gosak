@@ -13,7 +13,7 @@ A swiss army knife written in go
 
 # Download
 ```
-VERSION=v0.0.1
+VERSION=v0.0.2
 OS=linux
 ARCH=amd64
 curl -sSL -o gosak https://github.com/tienvu461/gosak/releases/download/${VERSION}/gosak.${OS}.${ARCH}

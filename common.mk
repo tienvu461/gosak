@@ -1,4 +1,4 @@
-.PHONY: mod fmt imports lint vet
+.PHONY: mod fmt imports lint unit-test
 
 mod:
 	go mod vendor
@@ -19,3 +19,9 @@ lint:
 	find . -type f -name '*.go' -not -path "./vendor/*" | xargs -n 1 golint | tee golint.txt
 	test ! -s golint.txt
 	rm -rf golint.txt
+
+unit-test:
+	go test -v -coverprofile=coverage.out ./cmd
+out2html:
+	go tool cover -o coverage.html -html=coverage.out
+	
