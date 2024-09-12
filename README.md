@@ -12,13 +12,16 @@ A swiss army knife written in go
 - AWS assume role
 
 # Download
+## Linux
 ```
-VERSION=v0.0.1
-OS=linux
-ARCH=amd64
-curl -sSL -o gosak https://github.com/tienvu461/gosak/releases/download/${VERSION}/gosak.${OS}.${ARCH}
+VERSION=v0.0.4
+OS=Linux
+ARCH=$(uname -i)
+curl -sSL -o gosak.tar.gz https://github.com/tienvu461/gosak/releases/download/${VERSION}/gosak_${OS}_${ARCH}.tar.gz
 chmod +x gosak
 ./gosak version
+# Optional
+# mv gosak $GOPATH/bin
 ```
 
 # Development
@@ -50,7 +53,7 @@ make -f build.mk build
 ```
 git checkout main
 git pull origin main
-git tag v0.0.1 -a
+git tag v0.0.4 -a
 git push origin --tags
 ```
 3. Verify CD and publish artifacts to [release page](https://github.com/tienvu461/gosak/releases/)

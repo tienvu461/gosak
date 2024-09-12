@@ -18,6 +18,14 @@ before:
 builds:
   - env:
       - CGO_ENABLED=0
+    ldflags:
+      - >
+       -s -w -X "github.com/tienvu461/gosak/utils.Version={{.Version}}" 
+       -X "github.com/tienvu461/gosak/utils.Hash={{.Env.HASH}}"
+       -X "github.com/tienvu461/gosak/utils.Date={{.Env.DATE}}"
+       -X "github.com/tienvu461/gosak/utils.Arch={{.Arch}}"
+       -X "github.com/tienvu461/gosak/utils.Os={{.Os}}"
+       -X "github.com/tienvu461/gosak/utils.GoVersion={{.Env.GOVERSION}}"
     main: ./main.go
     goos:
       - linux
