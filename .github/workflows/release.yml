@@ -1,19 +1,16 @@
-name: Run CD with goreleaser
+name: release
 on:
   workflow_dispatch:
   push:
-    # Pattern matched against refs/tags
     tags:        
       - 'v[0-9]+.[0-9]+.[0-9]+' # e.g: v1.0.0
-  # release:
-  #   types: [created]
 
 permissions:
   contents: write
   packages: write
 
 jobs:
-  goreleaser:
+  run-release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
