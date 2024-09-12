@@ -1,4 +1,4 @@
-name: release
+name: Release
 on:
   workflow_dispatch:
   push:
@@ -24,6 +24,12 @@ jobs:
         with:
           go-version: 1.23.0
           cache: true
+          
+      - name: Set build env vars
+        run: |
+          echo "HASH=$(git rev-parse --short --verify HEAD)" >> $GITHUB_ENV
+          echo "DATE=$(date -u '+%Y%m%dT%H%M%S')" >> $GITHUB_ENV
+          echo "GOVERSION=$(go version)" >> $GITHUB_ENV
 
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v6
@@ -33,3 +39,7 @@ jobs:
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HASH: ${{ env.HASH }}
+          DATE: ${{ env.DATE }}
+          GOVERSION: ${{ env.GOVERSION }}
+
