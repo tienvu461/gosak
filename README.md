@@ -18,6 +18,7 @@ VERSION=v0.0.4
 OS=Linux
 ARCH=$(uname -i)
 curl -sSL -o gosak.tar.gz https://github.com/tienvu461/gosak/releases/download/${VERSION}/gosak_${OS}_${ARCH}.tar.gz
+tar -xvf gosak.tar.gz
 chmod +x gosak
 ./gosak version
 # Optional
