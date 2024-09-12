@@ -25,10 +25,10 @@ jobs:
         with:
           fetch-depth: 400
 
-      - name: Set up Go 1.19
+      - name: Set up Go 1.23
         uses: actions/setup-go@v2
         with:
-          go-version: 1.19
+          go-version: 1.23
         id: go
 
       - name: version
