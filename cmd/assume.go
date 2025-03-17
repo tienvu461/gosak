@@ -61,7 +61,7 @@ func AssumeRole(role string, dura int64) (*credentials.Value, error) {
 
 // read mfa from terminal
 func mfaReader() (string, error) {
-	fmt.Println("MFA token is required:")
+    fmt.Fprintf(os.Stderr, "MFA token is required: ") // Printout message even eval() is wrapped
 	reader := bufio.NewReader(os.Stdin)
 	text, err := reader.ReadString('\n')
 	text = strings.Replace(text, "\n", "", -1) // convert CRLF to LF
