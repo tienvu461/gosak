@@ -2,7 +2,7 @@
 
 A swiss army knife written in go
 
-![sak](./sak.webp)
+![sak](./gopher_with_sak.jpeg)
 
 # Features
 - Base64 decode
