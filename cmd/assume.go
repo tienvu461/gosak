@@ -10,6 +10,7 @@ import (
 	"os"
 	"regexp"
 	"strings"
+	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
@@ -78,6 +79,7 @@ func AssumeProfile(profile string, dura int64) (*credentials.Value, error) {
 		Profile:                 profile,
 		SharedConfigState:       session.SharedConfigEnable,
 		AssumeRoleTokenProvider: mfaReader,
+		AssumeRoleDuration:      time.Duration(dura) * time.Second,
 	}))
 
 	// fmt.Println("Profile Provider does not support getting Expiration")
