@@ -35,6 +35,24 @@ This file documents the public CLI surface exposed by `gosak` and gives short us
 
 ---
 
+### `ec2`
+- **Description:** Manage AWS EC2 instances.
+- **Subcommands:**
+  - `list` List all EC2 instances.
+  - `start <instance-id>|<instance-name>` Start an EC2 instance.
+  - `stop <instance-id>|<instance-name>` Stop an EC2 instance.
+- **Example:**
+  - `gosak ec2 list`
+  - `gosak ec2 start i-1234567890`
+  - `gosak ec2 stop instance-name-1`
+
+---
+
+### `version` ℹ️
+- **Description:** Print build/version metadata (`Version`, `Hash`, `OS`, `Arch`, `GoVersion`).
+- **Usage:** `gosak version`
+
+---
 ### `b64` 📦
 - **Description:** Base64 encode/decode small strings.
 - **Key Flags:**
